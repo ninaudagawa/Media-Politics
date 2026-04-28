@@ -2,9 +2,12 @@
 
 ## 👥 Team Members
 
-- Name (@github_handle) - Role/Responsibility
-- Name (@github_handle) - Role/Responsibility
-- Name (@github_handle) - Role/Responsibility
+- Erin (@erinlpat) - Role/Responsibility
+- Martin (@Menendezhmartin) - Role/Responsibility
+- Mariiam (@togomariiam) - Role/Responsibility
+- Ailie (@akbalke)
+- Cyrus (@cyrusncw05)
+- Nina (@ninaudagawa)
 
 *(Add more members as needed)*
 
