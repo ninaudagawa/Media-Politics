@@ -20,7 +20,19 @@
 
 - Hypothesis 1: specific political topics that are highly controversial "Tariffs, unemployment, taxes, cost of living, inflation, pensions), migration (asylum, refugees, migrants, immigrants, border, etc.), gender and identity (abortion, LGTB, trans, etc.), etc." appear more in the news during national election cycles. 
 - Hypothesis 2: Political issues are framed more using strong language that elicits emotional responses during national election cycles in countries with polarizing politics? 
-- Hypothesis 3
+- Hypothesis 3: Issue salience increases as election day approaches, especially for high-stakes or conflictual topics
+- Hypothesis 4: A small number of issues dominate coverage in the final weeks of the campaign.
+- Hypothesis 5: Some issues show a short peak and quick disappearance, while others remain stable across the full cycle.
+- Hypothesis 6: Issues linked to scandals or crises rise sharply but have shorter life spans than structural issues like the economy or immigration.
+- Hypothesis 7: Migration has become the most salient topic in election cycles
+- Hypothesis 8: Ideologically distinct outlets differ in the timing and intensity of issue attention.
+- Hypothesis 9: Right-leaning and left-leaning outlets may not just mention different issues, but also frame the same issue differently.
+- Hypothesis 10: Issue salience is competitive: an increase in one topic crowds out others.
+- Hypothesis 11: Some issues co-occur systematically, such as immigration and crime, or economy and inflation.
+- Hypothesis 12: Topic co-occurrence becomes stronger during campaign periods than in non-election periods.
+- Hypothesis 13: Political actors lead issue attention before the media does, especially after formal campaign announcement.
+- Hypothesis 14: Media coverage amplifies or distorts the issue agenda set by candidates rather than reproducing it exactly.
+
 
 ## 📁 Data Sources
 
@@ -28,4 +40,21 @@
 |--------|-------------|-----|
 | World Bank | Brief description | [World Bank Open Data](https://data.worldbank.org/) |
 | IMF | Brief description | [IMF Data Portal](https://www.imf.org/en/Data) |
+| Comparative Agendas Project (CAP)| Includes dedicated datasets mapping media agendas and political topics.|
+| Multisource Financial News| Large-scale news archive for analyzing immigration discourse framing.|
+|Geopolitical Risk Index (GPR) | Daily/Monthly news-based text mining of geopolitical risk factors globally| 
+|V-Dem (Varieties of Democracy) | Has specialized modules evaluating media freedom, censorship, and political pluralism|
+|RSS Scraper Live Feed|  Real-time global news headlines for monitoring immigration coverage patterns|
+
+
+
+
+
+
+
+
+
+
+
+
 | 
