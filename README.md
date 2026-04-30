@@ -65,7 +65,8 @@
 |RSS Scraper Live Feed|  Real-time global news headlines for monitoring immigration coverage patterns|
 
 ## CAP Topic and variable 
-| Major Topic| Example subtopics |
+| Topic | Example Subtopics | URL |
+|--------|-------------|-----|
 | Macroeconomics|Interest rates, unemployment, national budget, tariffs|
 | Civil Rights |Voting rights, gender discrimination, privacy|
 | Health |Healthcare reform, prescription drugs, mental health|
