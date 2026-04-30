@@ -17,7 +17,7 @@
 > State your central research question clearly and concisely
 - **Research Question 1** (not question but just idea):  Use the Multisource Financial News corpus to track how political issues are framed (economic opportunity vs. security threat vs. humanitarian crisis) over time. Cross-reference with CAP legislation counts to test whether negative media framing predicts legislative restrictiveness on specific issues. Supplement with V-Dem media freedom scores to analyze whether framing differs across regime types
 - **Research Question 2**: How does one political topic “_____” displayed in the media (specifically news) change over 2 national election cycles (within 3 years pre-election, during election, post election) within one country 
--**Research Question 3**: What is the pattern of specific political topics that appear in the news during 1 national election cycle? 
+- **Research Question 3**: What is the pattern of specific political topics that appear in the news during 1 national election cycle? 
 - **Research Question 4**:Issue salience in the media and electoral cycles: starting with frequency of appearance and adding more sophistication to the analysis (framing, sentiment, etc.)
     12 months before election -> 3/6 months after election
     Control year without elections
