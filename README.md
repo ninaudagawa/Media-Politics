@@ -9,7 +9,7 @@
 - Cyrus (@cyrusncw05)
 - Nina (@ninaudagawa)
 
-## 📃 Team Google Doc
+### 📃 Team Google Doc
 This is a link to our shared team [google doc](https://docs.google.com/document/d/1Du4dsbBI-boIYcwgLPmUy349A3xhu8lIs0hSR87-xnA/edit?usp=sharing) where we are currently drafting our ideas and saving potential resources.
 
 
@@ -48,7 +48,7 @@ This is a link to our shared team [google doc](https://docs.google.com/document/
 - **Hypothesis 13**: Political actors lead issue attention before the media does, especially after formal campaign announcement.
 - **Hypothesis 14**: Media coverage amplifies or distorts the issue agenda set by candidates rather than reproducing it exactly.
 
-## Potential Countries to analyze 
+### Potential Countries to analyze 
 - From literature review: "Among these are countries that are known to have very polarized politics, such as the **United States**, **Brazil**, and **Malaysia**, and others that do not, such as **Canada**, **New Zealand**, and **Japan**. By testing these potential moderators, this study addresses several gaps in the literature.”
 - **UK**
   
@@ -69,7 +69,7 @@ This is a link to our shared team [google doc](https://docs.google.com/document/
 | Legislative Information APIs | Some countries make legislative voting data public using APIs like the USA and UK. Could be a useful way to track different governments' attention to policies. | [USA](https://www.congress.gov/), [UK](https://api.electoralcommission.org.uk/docs/) |
 | IPU Parline | Global Data on National Parliaments. | [Parline API](https://data.ipu.org/data-tools/api/) | 
 
-## CAP Topic and variable 
+### Possible CAP Topics and variables 
 | Topic | Example Subtopics |
 |--------|-------------|
 | Macroeconomics|Interest rates, unemployment, national budget, tariffs|
@@ -77,5 +77,77 @@ This is a link to our shared team [google doc](https://docs.google.com/document/
 | Public Health |Healthcare reform, prescription drugs, mental health|
 |Environment |Climate change, pollution|
 
+### Data Sources Details
 
+#### D.1 World Bank  
+**Variables:** e.g., NY.GDP.MKTP.CD, SE.PRM.CMPT.ZS
+
+**Granularity:** e.g., Annual data by Country
+
+#### D.2 IMF  
+**Variables:** e.g., Consumer Price Index, Interest Rates
+
+**Granularity:** e.g., Quarterly data by Region
+
+## 📂 Folder Structure
+
+### Folder Structure Notes
+- All projects MUST follow this standardized folder structure
+- `data/raw/` - **NEVER** edit manually; store original data here
+- `data/clean/` - Cleaned datasets ready for analysis
+- `data/temp/` - Temporary files (can be deleted)
+- `notebooks/` - Jupyter notebooks for analysis
+- `src/` - Python code
+- `reports/` - Final outputs: plots, summaries, model files
+- `docs/` - Project documentation, README, presentations
+
+### Folder Structure Tree
+
+```tree
+project/
+├── data/
+│   ├── raw/                   # Original, immutable data
+│   │   ├── world_bank_raw.csv
+│   │   └── imf_financials_raw.csv
+│   ├── clean/                 # Cleaned, transformed data
+│   │   ├── world_bank_clean.csv
+│   │   └── imf_merged_clean.csv
+│   └── temp/                  # Temporary working files
+├── notebooks/                 # Jupyter notebooks for exploration
+│   ├── 01_eda_worldbank.ipynb
+│   ├── 02_regression_analysis.ipynb
+│   └── 03_policy_simulations.ipynb
+├── src/                       # Production-ready scripts
+│   ├── download_worldbank.py  # API/Scraping script
+│   ├── clean_data.py          # Merging and cleaning logic
+│   └── visualize_worldbank.py # Chart generation functions
+├── reports/                   # Final outputs
+│   ├── figures/               # Saved .png plots for the memo
+│   │   ├── gdp_trend_line.png
+│   │   └── debt_distribution.png
+│   ├── policy_memo_final.pdf
+│   └── regression_results.txt
+└── docs/                      # Documentation
+    ├── data_details.md        # Data dictionary & column definitions
+    ├── data_architecture.md   # Pipeline logic and join keys
+    ├── policy_context.md      # Political background & stakeholders
+```
+
+## 📅 Timeline
+
+| Milestone | Deadline | Deliverable |
+|-----------|----------|-------------|
+| M1        | Date     | Output      |
+| M2        | Date     | Output      |
+| M3        | Date     | Output      |
+
+## 🤝 Contributions
+
+| Member | Tasks |
+|--------|-------|
+| Name   | Description of contributions |
+| Name   | Description of contributions |
+
+## 🔗 References
+- Link to methodology references
 
