@@ -48,7 +48,7 @@
 - Hypothesis 14: Media coverage amplifies or distorts the issue agenda set by candidates rather than reproducing it exactly.
 
 ## Potential Countries to analyze 
-- 
+- From literature review: "Among these are countries that are known to have very polarized politics, such as the United States, Brazil, and Malaysia, and others that do not, such as Canada, New Zealand, and Japan. By testing these potential moderators, this study addresses several gaps in the literature.” 
 
 ## 📁 Data Sources
 
