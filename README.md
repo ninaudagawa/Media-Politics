@@ -65,7 +65,7 @@
 |RSS Scraper Live Feed|  Real-time global news headlines for monitoring immigration coverage patterns|
 
 ## CAP Topic and variable 
-| Topic | Example Subtopics | unknwon |
+| Topic | Example Subtopics | idk |
 |--------|-------------|-----|
 | Macroeconomics|Interest rates, unemployment, national budget, tariffs|
 | Civil Rights |Voting rights, gender discrimination, privacy|
