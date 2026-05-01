@@ -50,7 +50,7 @@ This is a link to our shared team [google doc](https://docs.google.com/document/
 
 ### Potential Countries to analyze 
 - From literature review: "Among these are countries that are known to have very polarized politics, such as the **United States**, **Brazil**, and **Malaysia**, and others that do not, such as **Canada**, **New Zealand**, and **Japan**. By testing these potential moderators, this study addresses several gaps in the literature.”
-- **UK**
+- Recommendations: France, Germany, Italy, Denmark, Brazil, Australia
   
 
 ## 📁 Data Sources
