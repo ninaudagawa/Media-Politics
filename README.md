@@ -15,6 +15,8 @@ This is a link to our shared team [google doc](https://docs.google.com/document/
 
 ## ❓ Research Question & 🎯 Hypothesis
 
+NEW (still working): What topical trends can we draw between media coverage by the Japan Times and party manifestos between 2001-2021?
+
 > State your central research question clearly and concisely
 - **Research Question 1** (not question but just idea):  Use the Multisource Financial News corpus to track how political issues are framed (economic opportunity vs. security threat vs. humanitarian crisis) over time. Cross-reference with CAP legislation counts to test whether negative media framing predicts legislative restrictiveness on specific issues. Supplement with V-Dem media freedom scores to analyze whether framing differs across regime types
 - **Research Question 2**: How does one political topic “_____” displayed in the media (specifically news) change over 2 national election cycles (within 3 years pre-election, during election, post election) within one country 
