@@ -79,18 +79,6 @@ NEW (still working): What topical trends can we draw between media coverage by t
 | Public Health |Healthcare reform, prescription drugs, mental health|
 |Environment |Climate change, pollution|
 
-### Data Sources Details
-
-#### D.1 World Bank  
-**Variables:** e.g., NY.GDP.MKTP.CD, SE.PRM.CMPT.ZS
-
-**Granularity:** e.g., Annual data by Country
-
-#### D.2 IMF  
-**Variables:** e.g., Consumer Price Index, Interest Rates
-
-**Granularity:** e.g., Quarterly data by Region
-
 ## 📂 Folder Structure
 
 ### Folder Structure Notes
@@ -139,16 +127,21 @@ project/
 
 | Milestone | Deadline | Deliverable |
 |-----------|----------|-------------|
-| M1        | Date     | Output      |
-| M2        | Date     | Output      |
-| M3        | Date     | Output      |
+| M1        | May 20     | Research Question, Datasets, Use python to show descriptive statistics      |
+| M2        | June 6     | 5 Visualizations with descriptions, Migrate to .py files      |
+| M3        | July 1     | Presentation video      |
+| Final        | July 8 or 15     | Video and Peer Review      |
 
 ## 🤝 Contributions
 
 | Member | Tasks |
 |--------|-------|
-| Name   | Description of contributions |
-| Name   | Description of contributions |
+| Erin   | Description of contributions |
+| Ailie   | Description of contributions |
+| Nina   | Description of contributions |
+| Martin   | Description of contributions |
+| Cyrus   | Description of contributions |
+| Mariiam   | Description of contributions |
 
 ## 🔗 References
 - Link to methodology references
