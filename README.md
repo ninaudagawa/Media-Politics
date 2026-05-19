@@ -15,7 +15,11 @@ This is a link to our shared team [google doc](https://docs.google.com/document/
 
 ## ❓ Research Question & 🎯 Hypothesis
 
-NEW (still working): What topical trends can we draw between media coverage by the Japan Times and party manifestos between 2001-2021?
+NEW (still working): 
+1. What topical trends can we draw between media coverage by the Japan Times and party manifestos between 2001-2021?
+2. Which core policy issues championed in party manifestos (e.g., constitutional reform, nuclear energy) are consistently under-represented or over-represented in mainstream Japanese news articles?
+3. How did the semantic context of politically charged terms like "Stability" {安定} and "Reform" {改革} evolve in Japanese news media compared to how the LDP and DPJ/CDPJ framed them between 2001 and 2021?
+   
 
 > State your central research question clearly and concisely
 - **Research Question 1** (not question but just idea):  Use the Multisource Financial News corpus to track how political issues are framed (economic opportunity vs. security threat vs. humanitarian crisis) over time. Cross-reference with CAP legislation counts to test whether negative media framing predicts legislative restrictiveness on specific issues. Supplement with V-Dem media freedom scores to analyze whether framing differs across regime types
