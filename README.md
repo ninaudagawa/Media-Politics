@@ -19,6 +19,10 @@ NEW (still working):
 1. What topical trends can we draw between media coverage by the Japan Times and party manifestos between 2001-2021?
 2. Which core policy issues championed in party manifestos (e.g., constitutional reform, nuclear energy) are consistently under-represented or over-represented in mainstream Japanese news articles?
 3. How did the semantic context of politically charged terms like "Stability" {安定} and "Reform" {改革} evolve in Japanese news media compared to how the LDP and DPJ/CDPJ framed them between 2001 and 2021?
+4. How did media coverage and party manifestos' priorities of coverage shift as a result of significant events such as the 2008 financial crash, the 2011 triple disaster, the 2020 pandemic and Ddd the text data eventually revert to pre-crisis baselines, and if so, how fast?
+5. Does the sentiment of news media toward specific political parties become more polarized during years marked by major crises compared to the compared to the parties' self-representation in manifestos
+6. Does a spike in topic salience within party manifestos precede a corresponding increase in news coverage, or does media attention drive changes in the subsequent election's manifestos?
+
    
 
 > State your central research question clearly and concisely
