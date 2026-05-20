@@ -67,6 +67,7 @@ NEW (still working):
 
 | Source | Description | URL |
 |--------|-------------|-----|
+| Kaggle| News articles from Japanese newspapers, collected from newspapers websites and the Old Newspapers dataset. In Japanese and English. | (https://www.kaggle.com/datasets/vyhuholl/japanese-newspapers-20052021) |
 | World Bank | Development Statistics | [World Bank Open Data API](https://data360.worldbank.org/en/api) |
 | IMF | Economic Information | [IMF Data APIs](https://data.imf.org/en/Resource-Pages/IMF-API) |
 | Comparative Agendas Project (CAP)| Includes dedicated datasets mapping media agendas and political topics.| [CAP Datasets](https://www.comparativeagendas.net/datasets_codebooks) |
