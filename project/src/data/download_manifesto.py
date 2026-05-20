@@ -1,5 +1,9 @@
 import requests
 import pandas as pd
+#below is the API key for the project
+#import os
+#os.environ["MANIFESTO_API"] = "21d3420ed9dfad5cedfd39f935af41c2"
+
 
 class DownloadManifesto:
     def __init__(self, dataset_key, version, api_key):
