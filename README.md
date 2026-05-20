@@ -36,17 +36,8 @@ NEW (still working):
 | Source | Description | URL |
 |--------|-------------|-----|
 | Kaggle| News articles from Japanese newspapers, collected from newspapers websites and the Old Newspapers dataset. In Japanese and English. | (https://www.kaggle.com/datasets/vyhuholl/japanese-newspapers-20052021) |
-| World Bank | Development Statistics | [World Bank Open Data API](https://data360.worldbank.org/en/api) |
-| IMF | Economic Information | [IMF Data APIs](https://data.imf.org/en/Resource-Pages/IMF-API) |
-| Comparative Agendas Project (CAP)| Includes dedicated datasets mapping media agendas and political topics.| [CAP Datasets](https://www.comparativeagendas.net/datasets_codebooks) |
-| Multisource Financial News| Large-scale news archive|
-|Geopolitical Risk Index (GPR) | Daily/Monthly news-based text mining of geopolitical risk factors globally| 
-|V-Dem (Varieties of Democracy) | Has specialized modules evaluating media freedom, censorship, and political pluralism| [V-Dem Datasets](https://www.v-dem.net/data/)|
-|RSS Scraper Live Feed|  Real-time global news headlines and/or articles to use for webscraping and NLP|
-|Apify Web Scrapers|Some social media websites like twitter no longer have a functioning up-to-date API for us to source posts from. Apify has user-built models to help us scrape posts for content or sentiment analysis.|[Apify Website](https://apify.com/)|
-|Hugging Face | Sentiment analysis models that "specialize" in different things. We might plan to use this to analyze whatever media type we chose to focus on (News articles, social media posts, etc.). We will probably use some BERT model. | [Various Sentiment Analysis Models](https://huggingface.co/models?other=sentiment-analysis) |
-| Legislative Information APIs | Some countries make legislative voting data public using APIs like the USA and UK. Could be a useful way to track different governments' attention to policies. | [USA](https://www.congress.gov/), [UK](https://api.electoralcommission.org.uk/docs/) |
-| IPU Parline | Global Data on National Parliaments. | [Parline API](https://data.ipu.org/data-tools/api/) | 
+| Manifesto Project| Japanese party manifestos between 2001-2023 from various political parties| ([https://www.kaggle.com/datasets/vyhuholl/japanese-newspapers-20052021](https://manifestoproject.wzb.eu/)) |
+
 
 ### Possible CAP Topics and variables 
 | Topic | Example Subtopics |
