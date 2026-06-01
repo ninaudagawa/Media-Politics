@@ -96,7 +96,7 @@ project/
 | Milestone | Deadline | Deliverable |
 |-----------|----------|-------------|
 | M1        | May 20     | Research Question, Datasets, Use python to show descriptive statistics      |
-| M2        | June 6     | 5 Visualizations with descriptions, Migrate to .py files      |
+| M2        | June 6     | 5 Visualizations with descriptions, Migrate to .py files (Stretch)     |
 | M3        | July 1     | Presentation video      |
 | Final        | July 8 or 15     | Video and Peer Review      |
 
