@@ -28,8 +28,8 @@ NEW (still working):
     \[maybe] Does issue salience relate to political discourse (political speeches, etc.)? Which one precedes the other?
 
 **Hypotheses**
-- **Hypothesis 1**: 
-- **Hypothesis 2**: 
+- **Hypothesis 1**: drafting...
+- **Hypothesis 2**: drafting...
 
 ## 📁 Data Sources
 
@@ -104,7 +104,7 @@ project/
 
 | Member | Tasks |
 |--------|-------|
-| Erin   | Description of contributions |
+| Erin   | Cleaning datasets, News Article Keyword Analysis, Manifesto API Data Extraction |
 | Ailie   | Description of contributions |
 | Nina   | Description of contributions |
 | Martin   | Description of contributions |
