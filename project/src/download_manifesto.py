@@ -71,6 +71,7 @@ class DownloadManifesto:
                         "translation_en": item.get("translation_en"),
                         "language": item.get("language"),
                         "title": item.get("title"),
+                        "url_original": item.get("url_original"),
                     }
                 )
 
@@ -107,6 +108,37 @@ class DownloadManifesto:
         
         df['text'] = df['manifesto_id'].map(texts)
         return df.dropna(subset=["text"]).set_index(['countryname', 'date'])
+
+    def get_pdfs(self, df, dest_dir="pdfs"):
+        """Download original PDFs and add a 'pdf_path' column to the dataframe (requires url_original column)."""
+        if 'url_original' not in df.columns:
+            raise ValueError("DataFrame must have 'url_original' column. Call get_metadata() first.")
+
+        df = df.copy()
+        os.makedirs(dest_dir, exist_ok=True)
+
+        paths = []
+        for manifesto_id, url_original in zip(df['manifesto_id'], df['url_original']):
+            if not url_original or pd.isna(url_original):
+                paths.append(None)
+                continue
+
+            params = {"api_key": self.api_key}
+            url = f"https://manifesto-project.wzb.eu/{url_original}?{urlencode(params)}"
+            dest_path = os.path.join(dest_dir, f"{manifesto_id}.pdf")
+
+            try:
+                with urlopen(url, timeout=60) as response:
+                    content = response.read()
+                with open(dest_path, "wb") as f:
+                    f.write(content)
+                paths.append(dest_path)
+            except HTTPError as exc:
+                print(f"Failed to download {manifesto_id}: {exc.code}")
+                paths.append(None)
+
+        df['pdf_path'] = paths
+        return df
 
 
 def download_country_manifestos(country, limit=None, translation=None, **kwargs):
