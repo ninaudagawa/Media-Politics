@@ -1,4 +1,6 @@
 # Byte-compiled / optimized / DLL files
+japan_pdfs/
+japan_manifestos.csv
 .DS_Store
 __pycache__/
 *.py[codz]
