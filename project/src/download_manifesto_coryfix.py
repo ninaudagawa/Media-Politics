@@ -1,6 +1,5 @@
 """
-from download_manifesto_coryfix.py on cory_branch
-thank you Cory!!
+download_manifesto_coryfix.py
 ─────────────────────────────
 Downloads data from the Manifesto Project API.
 
@@ -39,7 +38,6 @@ _SITE_BASE = "https://manifesto-project.wzb.eu"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Class 1: API access (metadata + machine-readable text)
-# Talks to the JSON API to get metadata and machine-readable text
 # ─────────────────────────────────────────────────────────────────────────────
 
 class DownloadManifesto:
@@ -189,7 +187,6 @@ class DownloadManifesto:
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Class 2: PDF downloads (requires web login)
-# Logs in to the website and downloads the original PDF files
 # ─────────────────────────────────────────────────────────────────────────────
 
 class ManifestoPDFSession:
