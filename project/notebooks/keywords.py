@@ -2,7 +2,7 @@
 CATEGORY_KEYWORDS = {
     "defense": {
         "defense", "defence", "military", "self-defense", "self-defence",
-        "security", "troops", "army", "navy", "armed forces", "war", "SDF",
+        "troops", "army", "navy", "armed forces", "SDF",
         "missile", "military base", "alliance", "deterrence", "article 9", "threat", "north korea", "china", "russia", "security council"
     },
     "economy": {
