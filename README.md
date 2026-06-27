@@ -15,37 +15,29 @@ This is a link to our shared team [google doc](https://docs.google.com/document/
 
 ## ❓ Research Question & 🎯 Hypothesis
 
-NEW (still working): 
-1. What topical trends can we draw between media coverage by the Japan Times and party manifestos between 2001-2021?
-2. Which core policy issues championed in party manifestos (e.g., constitutional reform, nuclear energy) are consistently under-represented or over-represented in mainstream Japanese news articles?
-3. How did the semantic context of politically charged terms like "Stability" {安定} and "Reform" {改革} evolve in Japanese news media compared to how the LDP and DPJ/CDPJ framed them between 2001 and 2021?
-4. How did media coverage and party manifestos' priorities of coverage shift as a result of significant events such as the 2008 financial crash, the 2011 triple disaster, the 2020 pandemic and Ddd the text data eventually revert to pre-crisis baselines, and if so, how fast?
-5. Does the sentiment of news media toward specific political parties become more polarized during years marked by major crises compared to the compared to the parties' self-representation in manifestos
-6. Does a spike in topic salience within party manifestos precede a corresponding increase in news coverage, or does media attention drive changes in the subsequent election's manifestos?
-
+1. How did the policy agenda emphasized in Prime Minister speeches compare with that of the Japan Times between 2001 and 2021?
+2. Which policy issues received consistently greater attention in Prime Minister speeches versus the Japan Times?
+3. How did sentiment toward shared policy issues differ between Prime Minister speeches and the Japan Times? Can AI-based sentiment analysis effectively capture differences in the tone of government and media discourse, and what methodological challenges arise when applying it to political texts?
+4. Can this analytical framework be generalized to compare political and media discourse in other democratic countries?
    
 
     \[maybe] Does issue salience relate to political discourse (political speeches, etc.)? Which one precedes the other?
 
 **Hypotheses**
-- **Hypothesis 1**: drafting...
-- **Hypothesis 2**: drafting...
+- **Hypothesis 1**: Prime Minister speeches and The Japan Times will exhibit significant differences in the policy issues they prioritize between 2001 and 2021, reflecting the distinct objectives of government leaders and the news media.
+Rationale: Government speeches are intended to promote and justify policy agendas, while news media select issues based on newsworthiness, public interest, and editorial priorities. 
+- **Hypothesis 2**: AI-based text tokenization and sentiment analysis will identify measurable differences in the tone of policy discussions between Prime Minister speeches and The Japan Times*, but its performance will be constrained by the complexity and nuance of political language.
+Rationale: Political speeches often employ diplomatic, strategic, or deliberately neutral language that may not be fully captured by automated sentiment analysis. 
 
 ## 📁 Data Sources
 
 | Source | Description | URL |
 |--------|-------------|-----|
 | Kaggle| News articles from Japanese newspapers, collected from newspapers websites and the Old Newspapers dataset. In Japanese and English. | (https://www.kaggle.com/datasets/vyhuholl/japanese-newspapers-20052021) |
-| Manifesto Project| Japanese party manifestos between 2001-2023 from various political parties| ([https://www.kaggle.com/datasets/vyhuholl/japanese-newspapers-20052021](https://manifestoproject.wzb.eu/)) |
+| "The World and Japan" Database by Institute for Advanced Studies on Asia (IASA), The University of Tokyo| Database of Japanese Politics and International Relations Speeches of Prime Ministers| (https://worldjpn.net/documents/indices/exdpm/index-ENG.html)) |
+| New York Times Index by Comparative Agnedas Project| This dataset is a systematic random sample of the New York Times Index. The sample includes the first entry on every odd-numbered page of the Index. Each entry is coded by CAP and U.S. Policy Agendas major topics and includes other variables such as the length, date and location of the story and whether it addressed government actions.| (https://www.comparativeagendas.net/datasets_codebooks) |
+| State of the Union Speeches by Comparative Agnedas Project| This dataset contains information on each quasi-statement in the Presidential State of the Union Speeches. Each quasi-statement is coded according to our system of policy content categories and other variables. | ([https://worldjpn.net/documents/indices/exdpm/index-ENG.html)](https://www.comparativeagendas.net/datasets_codebooks)) |
 
-
-### Possible CAP Topics and variables 
-| Topic | Example Subtopics |
-|--------|-------------|
-| Macroeconomics|Interest rates, unemployment, national budget, tariffs|
-| Civil Rights |Voting rights, gender discrimination, privacy|
-| Public Health |Healthcare reform, prescription drugs, mental health|
-|Environment |Climate change, pollution|
 
 ## 📂 Folder Structure
 
