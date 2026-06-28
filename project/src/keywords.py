@@ -1,4 +1,3 @@
-
 CATEGORY_KEYWORDS = {
     "defense": {
         "defense", "defence", "military", "self-defense", "self-defence",
