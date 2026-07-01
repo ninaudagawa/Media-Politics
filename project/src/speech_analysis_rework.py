@@ -2,6 +2,8 @@ import spacy
 from collections import Counter, defaultdict
 import pandas as pd
 import sys
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 from src.keywords import CATEGORY_KEYWORDS  # defense, economy, nuclear, immigration
 
 YEAR_START, YEAR_END = 2004, 2021
@@ -60,7 +62,7 @@ def matched_categories(phrase):
 
 
 def build_top_political_phrases_df(speeches_df, year_start=YEAR_START, year_end=YEAR_END, min_doc_freq=MIN_DOC_FREQ, top_n=100):
-   
+
     speeches_range = speeches_df[
         (speeches_df.index.year >= year_start) & (speeches_df.index.year <= year_end)
     ]
