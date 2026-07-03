@@ -94,3 +94,45 @@ def build_top_political_phrases_df(speeches_df, year_start=YEAR_START, year_end=
         .head(top_n)
         .reset_index(drop=True)
     )
+
+
+def plot_top_political_phrases(top_political_phrases_df, top_n=10):
+    top = top_political_phrases_df.head(top_n).sort_values("total_count")
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    bars = ax.barh(top["phrase"], top["total_count"], color="#2a78d6", height=0.6)
+
+    ax.bar_label(bars, padding=3, color="#52514e", fontsize=9)
+
+    ax.set_xlabel("Total mentions")
+    ax.set_title(f"Top {top_n} Political Phrases", fontsize=13, color="#0b0b0b")
+
+    ax.spines[["top", "right", "left"]].set_visible(False)
+    ax.spines["bottom"].set_color("#c3c2b7")
+    ax.tick_params(axis="y", length=0)
+    ax.tick_params(axis="x", colors="#898781")
+    ax.set_xlim(0, top["total_count"].max() * 1.15)
+
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_political_phrases_wordcloud(top_political_phrases_df):
+    freqs = dict(zip(top_political_phrases_df["phrase"], top_political_phrases_df["total_count"]))
+
+    wc = WordCloud(
+        width=1000,
+        height=600,
+        background_color="#fcfcfb",
+        colormap="rainbow",
+        prefer_horizontal=1.0,
+    ).generate_from_frequencies(freqs)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.imshow(wc, interpolation="bilinear")
+    ax.axis("off")
+    ax.set_title("Top Political Phrases", fontsize=13, color="#0b0b0b")
+
+    plt.tight_layout()
+    plt.show()
