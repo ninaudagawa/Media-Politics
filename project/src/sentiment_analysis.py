@@ -1,37 +1,62 @@
 """
-Article sentiment scoring against a local Ollama model or the Gemini API.
+sentiment_analysis.py
 
-Usage:
-    analyzer = ArticleSentimentAnalyzer(backend="ollama")
-    score = analyzer.score_article(article_text, topic="immigration")
+LLM-based topic sentiment analysis for Japan news articles and PM speeches.
+
+Mirrors the calling convention of graph_articles.py:
+
+    from src.sentiment_analysis import run_topic_sentiment, plot_sentiment_comparison
+
+    news_results = run_topic_sentiment(JPnews_df, source="news")
+    speech_results = run_topic_sentiment(JPspeeches_df, source="speech")
+
+    plot_sentiment_comparison(news_results, speech_results, labels=["News", "Speeches"])
 """
 
 from __future__ import annotations
 
+import json
 import os
-from typing import Optional
+import re
+from typing import Dict, List, Optional, Tuple
 
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
-KEYWORDS = [
-    "china",
-    "nuclear",
-    "immigration",
-    "constitution",
-    "deflation",
-    "North Korea",
-]
+# ---------------------------------------------------------------------------
+# Topic definitions
+# ---------------------------------------------------------------------------
 
+TOPIC_KEYWORDS: Dict[str, List[str]] = {
+    "Immigration": ["immigration", "immigrant", "migrant"],
+    "China": ["china", "chinese", "beijing"],
+    "Nuclear": ["nuclear", "nuclear power", "nuclear reactor", "fukushima"],
+    "Constitution": ["constitution", "constitutional", "article 9"],
+    "Deflation": ["deflation", "deflationary", "falling prices"],
+    "North Korea": [
+        "north korea",
+        "kim jong un",
+        "nuclear weapons",
+        "democratic people's republic of korea",
+        "dprk",
+    ],
+}
+
+
+# ---------------------------------------------------------------------------
+# LLM client (Ollama or Gemini)
+# ---------------------------------------------------------------------------
 
 class ArticleSentimentAnalyzer:
-    """Scores article sentiment toward a topic using a configurable LLM backend."""
+    """Thin client for sending prompts to a local Ollama model or the Gemini API."""
 
     OLLAMA_URL = "http://localhost:11434/api/generate"
-    OLLAMA_CHAT_URL = "http://localhost:11434/api/chat"
     GEMINI_URL_TEMPLATE = (
         "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     )
@@ -57,38 +82,16 @@ class ArticleSentimentAnalyzer:
             if not self.gemini_api_key:
                 raise ValueError("Add GEMINIE to your .env file before using the gemini backend.")
 
-    # -- LLM backends ---------------------------------------------------
-
     def _call_ollama(self, prompt: str) -> str:
-        """Query Ollama's /api/generate endpoint with a single prompt string."""
         response = requests.post(
             self.OLLAMA_URL,
-            json={
-                "model": self.ollama_model,
-                "prompt": prompt,
-                "stream": False,
-            },
+            json={"model": self.ollama_model, "prompt": prompt, "stream": False},
             timeout=self.timeout,
         )
         response.raise_for_status()
         return response.json()["response"]
 
-    def _call_ollama_chat(self, prompt: str) -> str:
-        """Query Ollama's /api/chat endpoint (chat-style messages), if you need it instead."""
-        response = requests.post(
-            self.OLLAMA_CHAT_URL,
-            json={
-                "model": self.ollama_model,
-                "messages": [{"role": "user", "content": prompt}],
-                "stream": False,
-            },
-            timeout=self.timeout,
-        )
-        response.raise_for_status()
-        return response.json()["message"]["content"]
-
     def _call_gemini(self, prompt: str) -> str:
-        """Query the Gemini API with a single prompt string."""
         url = self.GEMINI_URL_TEMPLATE.format(model=self.gemini_model)
         response = requests.post(
             url,
@@ -101,143 +104,18 @@ class ArticleSentimentAnalyzer:
         return data["candidates"][0]["content"]["parts"][0]["text"]
 
     def query_llm(self, prompt: str) -> str:
-        """Dispatch a prompt to whichever backend this instance was configured with."""
         if self.backend == "ollama":
             return self._call_ollama(prompt)
         return self._call_gemini(prompt)
 
-    # -- Scoring ----------------------------------------------------------
 
-    def score_article(self, article_text: str, topic: str) -> Optional[int]:
-        """
-        Score sentiment toward `topic` in `article_text` on a -2..2 scale.
+# ---------------------------------------------------------------------------
+# Prompt builders + parsers — news uses a JSON response, speeches use a
+# labeled-text response, so each source gets its own pair.
+# ---------------------------------------------------------------------------
 
-        Returns None if the model's response can't be parsed as an integer.
-        """
-        prompt = f"""You are a political text analysis assistant.
-
-Evaluate the sentiment expressed toward {topic}.
-
-Return ONLY ONE NUMBER:
-
--2 = strongly negative
--1 = somewhat negative
-0 = neutral
-1 = somewhat positive
-2 = strongly positive
-
-Article:
-
-{article_text[:3000]}
-"""
-        result = self.query_llm(prompt)
-        try:
-            return int(result.strip())
-        except ValueError:
-            return None
-
-
-if __name__ == "__main__":
-    analyzer = ArticleSentimentAnalyzer(backend="ollama")
-    sample_text = "Sample article text goes here..."
-    for keyword in KEYWORDS:
-        score = analyzer.score_article(sample_text, keyword)
-        print(f"{keyword}: {score}")
-"""
-Topic-based sentiment analysis over the Japan English-language news dataset.
-
-Loads the news CSV, finds articles matching a set of topic keyword lists,
-samples articles per topic, sends each to an LLM for structured analysis
-(score / frame / key sentence), and produces per-topic summaries plus a
-sentiment comparison chart.
-
-Depends on ArticleSentimentAnalyzer from sentiment_analyzer.py for LLM calls.
-"""
-
-from __future__ import annotations
-
-import json
-import re
-from typing import Dict, List, Optional
-
-import matplotlib.pyplot as plt
-import pandas as pd
-
-from sentiment_analyzer import ArticleSentimentAnalyzer
-
-
-# Keyword lists per topic, used to filter articles via a case-insensitive
-# substring match against the article text.
-TOPIC_KEYWORDS: Dict[str, List[str]] = {
-    "Immigration": ["immigration", "immigrant", "migrant"],
-    "China": ["china", "chinese", "beijing"],
-    "Nuclear": ["nuclear", "nuclear power", "nuclear reactor", "fukushima"],
-    "Constitution": ["constitution", "constitutional", "article 9"],
-    "Deflation": ["deflation", "deflationary", "falling prices"],
-    "North Korea": [
-        "north korea",
-        "kim jong un",
-        "nuclear weapons",
-        "democratic people's republic of korea",
-        "dprk",
-    ],
-}
-
-
-class JapanNewsTopicAnalyzer:
-    """Runs topic-filtered, LLM-scored sentiment analysis over a news CSV."""
-
-    def __init__(
-        self,
-        csv_path: str,
-        analyzer: Optional[ArticleSentimentAnalyzer] = None,
-        sample_size: int = 20,
-        random_state: int = 42,
-    ):
-        self.csv_path = csv_path
-        self.analyzer = analyzer or ArticleSentimentAnalyzer(backend="ollama")
-        self.sample_size = sample_size
-        self.random_state = random_state
-
-        self.df = self._load_data()
-        self.topic_dfs: Dict[str, pd.DataFrame] = {}
-
-    # -- Data loading -----------------------------------------------------
-
-    def _load_data(self) -> pd.DataFrame:
-        df = pd.read_csv(self.csv_path, sep="\t")
-        df["date"] = pd.to_datetime(df["date"])
-        return df
-
-    # -- Topic filtering ----------------------------------------------------
-
-    def _topic_mask(self, keywords: List[str]) -> pd.Series:
-        pattern = "|".join(keywords)
-        return self.df["text"].str.contains(pattern, case=False, na=False, regex=True)
-
-    def count_topic_mentions(self) -> Dict[str, int]:
-        """Count how many articles mention each topic's keywords."""
-        return {
-            topic: int(self._topic_mask(keywords).sum())
-            for topic, keywords in TOPIC_KEYWORDS.items()
-        }
-
-    def get_topic_articles(self, topic: str) -> pd.DataFrame:
-        return self.df[self._topic_mask(TOPIC_KEYWORDS[topic])]
-
-    def sample_topic_articles(self, topic: str) -> pd.DataFrame:
-        articles = self.get_topic_articles(topic)
-        n = min(self.sample_size, len(articles))
-        return articles.sample(n=n, random_state=self.random_state)
-
-    # -- LLM analysis -------------------------------------------------------
-
-    def analyze_article(self, article_text: str, topic: str) -> dict:
-        """
-        Send one article to the LLM and return a parsed dict with
-        score (-2..2), frame, key_sentence, and the raw response text.
-        """
-        prompt = f"""You are a political text analysis assistant.
+def _build_news_prompt(text: str, topic: str) -> str:
+    return f"""You are a political text analysis assistant.
 
 Evaluate how {topic} is portrayed in the article below and respond with
 ONLY a JSON object (no markdown, no commentary) in this exact shape:
@@ -250,197 +128,26 @@ ONLY a JSON object (no markdown, no commentary) in this exact shape:
 
 Article:
 
-{article_text[:3000]}
-"""
-        raw = self.analyzer.query_llm(prompt)
-        return self._parse_analysis(raw)
-
-    @staticmethod
-    def _parse_analysis(raw: str) -> dict:
-        try:
-            cleaned = re.sub(r"```json|```", "", raw).strip()
-            data = json.loads(cleaned)
-            return {
-                "score": data.get("score"),
-                "frame": data.get("frame"),
-                "key_sentence": data.get("key_sentence"),
-                "raw": raw,
-            }
-        except (json.JSONDecodeError, AttributeError, TypeError):
-            return {"score": None, "frame": None, "key_sentence": None, "raw": raw}
-
-    def analyze_topic(self, topic: str) -> pd.DataFrame:
-        """Sample articles for a topic, analyze each, and store the result."""
-        sample = self.sample_topic_articles(topic)
-
-        records = []
-        for _, row in sample.iterrows():
-            analysis = self.analyze_article(row["text"], topic)
-            records.append({"date": row["date"], "title": row["title"], **analysis})
-
-        df = pd.DataFrame(records)
-        self.topic_dfs[topic] = df
-
-        if not df.empty:
-            print(f"Average {topic} sentiment: {df['score'].mean()}")
-
-        return df
-
-    def analyze_all_topics(self, topics: Optional[List[str]] = None) -> Dict[str, pd.DataFrame]:
-        topics = topics or list(TOPIC_KEYWORDS.keys())
-        for topic in topics:
-            print(f"Analyzing {topic}...")
-            self.analyze_topic(topic)
-        return self.topic_dfs
-
-    # -- Summaries and plotting ----------------------------------------------
-
-    def summary_table(self) -> pd.DataFrame:
-        """Average sentiment score per analyzed topic, sorted ascending."""
-        rows = [
-            {"Topic": topic, "Average Sentiment": df["score"].mean()}
-            for topic, df in self.topic_dfs.items()
-        ]
-        return pd.DataFrame(rows).sort_values("Average Sentiment")
-
-    def plot_summary(self, save_path: Optional[str] = None) -> None:
-        summary = self.summary_table()
-
-        plt.figure(figsize=(8, 5))
-        plt.barh(summary["Topic"], summary["Average Sentiment"])
-        plt.axvline(x=0, linestyle="--")
-        plt.xlabel("Average Sentiment")
-        plt.title("Average Sentiment by Topic based on News Articles")
-        plt.tight_layout()
-
-        if save_path:
-            plt.savefig(save_path)
-        plt.show()
-
-    def summarize_topic_with_llm(self, topic: str) -> str:
-        df = self.topic_dfs[topic]
-        text = "\n\n".join(df["raw"].dropna().tolist())
-
-        prompt = f"""Summarize the findings for {topic}.
-
-Include:
-- overall sentiment
-- dominant frames
-- recurring themes
-
-Keep to 4-5 sentences.
-
-{text[:12000]}
-"""
-        return self.analyzer.query_llm(prompt)
-
-    def summarize_all_topics_with_llm(self) -> Dict[str, str]:
-        summaries = {}
-        for topic in self.topic_dfs:
-            summary = self.summarize_topic_with_llm(topic)
-            summaries[topic] = summary
-            print("=" * 80)
-            print(topic)
-            print(summary)
-        return summaries
-
-
-if __name__ == "__main__":
-    pipeline = JapanNewsTopicAnalyzer(
-        csv_path="../../project/data/raw/japan_english_news_kaggle.csv",
-    )
-
-    print(pipeline.count_topic_mentions())
-
-    pipeline.analyze_all_topics()
-    pipeline.plot_summary()
-    pipeline.summarize_all_topics_with_llm()        
-"""
-Topic-based government-stance analysis over Japanese PM speech transcripts.
-
-Loads the speech CSV, finds speeches matching topic keyword lists, samples
-speeches per topic, sends each to an LLM to classify the government's stance
-(score / frame / key sentence / reasoning), and produces per-topic summaries
-plus a stance comparison chart.
-
-Depends on ArticleSentimentAnalyzer from sentiment_analyzer.py for LLM calls,
-and reuses the topic keyword definitions from japan_news_topic_analyzer.py so
-the news and speech pipelines stay aligned on what each topic means.
+{text[:3000]}
 """
 
-from __future__ import annotations
 
-import re
-from typing import Dict, List, Optional
-
-import matplotlib.pyplot as plt
-import pandas as pd
-
-from sentiment_analyzer import ArticleSentimentAnalyzer
-from japan_news_topic_analyzer import TOPIC_KEYWORDS
-
-# Matches "LABEL: value" blocks up to the next known label or end of string.
-_LABEL_PATTERN = re.compile(
-    r"(SCORE|FRAME|KEY SENTENCE|REASONING):\s*(.*?)"
-    r"(?=\n(?:SCORE|FRAME|KEY SENTENCE|REASONING):|\Z)",
-    re.DOTALL | re.IGNORECASE,
-)
-
-
-class PMSpeechTopicAnalyzer:
-    """Runs topic-filtered, LLM-scored government-stance analysis over PM speeches."""
-
-    def __init__(
-        self,
-        csv_path: str,
-        analyzer: Optional[ArticleSentimentAnalyzer] = None,
-        sample_size: int = 20,
-        random_state: int = 42,
-        topics: Optional[Dict[str, List[str]]] = None,
-    ):
-        self.csv_path = csv_path
-        self.analyzer = analyzer or ArticleSentimentAnalyzer(backend="ollama")
-        self.sample_size = sample_size
-        self.random_state = random_state
-        self.topics = topics or TOPIC_KEYWORDS
-
-        self.df = self._load_data()
-        self.topic_dfs: Dict[str, pd.DataFrame] = {}
-
-    # -- Data loading -----------------------------------------------------
-
-    def _load_data(self) -> pd.DataFrame:
-        return pd.read_csv(self.csv_path, index_col="date", parse_dates=True)
-
-    # -- Topic filtering ------------------------------------------------------
-
-    def _topic_mask(self, keywords: List[str]) -> pd.Series:
-        pattern = "|".join(keywords)
-        return self.df["text"].str.contains(pattern, case=False, na=False, regex=True)
-
-    def count_topic_mentions(self) -> Dict[str, int]:
-        """Count how many speeches mention each topic's keywords."""
+def _parse_news_analysis(raw: str) -> dict:
+    try:
+        cleaned = re.sub(r"```json|```", "", raw).strip()
+        data = json.loads(cleaned)
         return {
-            topic: int(self._topic_mask(keywords).sum())
-            for topic, keywords in self.topics.items()
+            "score": data.get("score"),
+            "frame": data.get("frame"),
+            "key_sentence": data.get("key_sentence"),
+            "raw": raw,
         }
+    except (json.JSONDecodeError, AttributeError, TypeError):
+        return {"score": None, "frame": None, "key_sentence": None, "raw": raw}
 
-    def get_topic_speeches(self, topic: str) -> pd.DataFrame:
-        return self.df[self._topic_mask(self.topics[topic])]
 
-    def sample_topic_speeches(self, topic: str) -> pd.DataFrame:
-        speeches = self.get_topic_speeches(topic)
-        n = min(self.sample_size, len(speeches))
-        return speeches.sample(n=n, random_state=self.random_state)
-
-    # -- LLM analysis -------------------------------------------------------
-
-    def analyze_speech(self, speech_text: str, topic: str) -> dict:
-        """
-        Send one speech to the LLM and return a parsed dict with score
-        (-2..2), frame, key_sentence, reasoning, and the raw response text.
-        """
-        prompt = f"""You are a political scientist analyzing Japanese Prime Minister speeches.
+def _build_speech_prompt(text: str, topic: str) -> str:
+    return f"""You are a political scientist analyzing Japanese Prime Minister speeches.
 
 Your task is to evaluate the government's stance toward {topic}.
 
@@ -475,7 +182,7 @@ REASONING:
 Briefly explain why you assigned the score and frame.
 
 Speech:
-{speech_text[:2500]}
+{text[:2500]}
 
 Return EXACTLY:
 
@@ -484,222 +191,191 @@ FRAME:
 KEY SENTENCE:
 REASONING:
 """
+
+
+_SPEECH_LABEL_PATTERN = re.compile(
+    r"(SCORE|FRAME|KEY SENTENCE|REASONING):\s*(.*?)"
+    r"(?=\n(?:SCORE|FRAME|KEY SENTENCE|REASONING):|\Z)",
+    re.DOTALL | re.IGNORECASE,
+)
+
+
+def _parse_speech_analysis(raw: str) -> dict:
+    fields = {
+        label.upper(): value.strip()
+        for label, value in _SPEECH_LABEL_PATTERN.findall(raw)
+    }
+
+    score = None
+    score_match = re.search(r"-?\d+", fields.get("SCORE", ""))
+    if score_match:
+        score = int(score_match.group())
+
+    return {
+        "score": score,
+        "frame": fields.get("FRAME"),
+        "key_sentence": fields.get("KEY SENTENCE"),
+        "reasoning": fields.get("REASONING"),
+        "raw": raw,
+    }
+
+
+_SOURCE_CONFIG = {
+    "news": {"build_prompt": _build_news_prompt, "parse": _parse_news_analysis},
+    "speech": {"build_prompt": _build_speech_prompt, "parse": _parse_speech_analysis},
+}
+
+
+# ---------------------------------------------------------------------------
+# Core analysis pipeline
+# ---------------------------------------------------------------------------
+
+class TopicSentimentAnalyzer:
+    """
+    Filters a dataframe of articles or speeches by topic keywords, samples
+    rows per topic, and scores each sample with an LLM.
+
+    `source` controls both the prompt style and how the response is parsed:
+    "news" -> JSON response; "speech" -> labeled-text response.
+    """
+
+    def __init__(
+        self,
+        df: pd.DataFrame,
+        source: str = "news",
+        topics: Optional[Dict[str, List[str]]] = None,
+        text_column: str = "text",
+        title_column: str = "title",
+        date_column: str = "date",
+        analyzer: Optional[ArticleSentimentAnalyzer] = None,
+        sample_size: int = 20,
+        random_state: int = 42,
+    ):
+        if source not in _SOURCE_CONFIG:
+            raise ValueError(f"Unsupported source: {source!r}. Use 'news' or 'speech'.")
+
+        self.df = df
+        self.source = source
+        self.topics = topics or TOPIC_KEYWORDS
+        self.text_column = text_column
+        self.title_column = title_column
+        self.date_column = date_column
+        self.analyzer = analyzer or ArticleSentimentAnalyzer(backend="ollama")
+        self.sample_size = sample_size
+        self.random_state = random_state
+
+        self.topic_dfs: Dict[str, pd.DataFrame] = {}
+
+    def _topic_mask(self, keywords: List[str]) -> pd.Series:
+        pattern = "|".join(keywords)
+        return self.df[self.text_column].str.contains(pattern, case=False, na=False, regex=True)
+
+    def count_topic_mentions(self) -> Dict[str, int]:
+        return {topic: int(self._topic_mask(kw).sum()) for topic, kw in self.topics.items()}
+
+    def get_topic_rows(self, topic: str) -> pd.DataFrame:
+        return self.df[self._topic_mask(self.topics[topic])]
+
+    def sample_topic_rows(self, topic: str) -> pd.DataFrame:
+        rows = self.get_topic_rows(topic)
+        n = min(self.sample_size, len(rows))
+        return rows.sample(n=n, random_state=self.random_state)
+
+    def analyze_text(self, text: str, topic: str) -> dict:
+        config = _SOURCE_CONFIG[self.source]
+        prompt = config["build_prompt"](text, topic)
         raw = self.analyzer.query_llm(prompt)
-        return self._parse_analysis(raw)
-
-    @staticmethod
-    def _parse_analysis(raw: str) -> dict:
-        fields = {
-            label.upper(): value.strip()
-            for label, value in _LABEL_PATTERN.findall(raw)
-        }
-
-        score = None
-        score_match = re.search(r"-?\d+", fields.get("SCORE", ""))
-        if score_match:
-            score = int(score_match.group())
-
-        return {
-            "score": score,
-            "frame": fields.get("FRAME"),
-            "key_sentence": fields.get("KEY SENTENCE"),
-            "reasoning": fields.get("REASONING"),
-            "raw": raw,
-        }
+        return config["parse"](raw)
 
     def analyze_topic(self, topic: str) -> pd.DataFrame:
-        """Sample speeches for a topic, analyze each, and store the result."""
-        sample = self.sample_topic_speeches(topic)
+        sample = self.sample_topic_rows(topic)
 
         records = []
-        for date, row in sample.iterrows():
-            analysis = self.analyze_speech(row["text"], topic)
-            records.append({"date": date, "title": row["title"], **analysis})
+        for _, row in sample.iterrows():
+            analysis = self.analyze_text(row[self.text_column], topic)
+            date_value = row[self.date_column] if self.date_column in row.index else row.name
+            title_value = row[self.title_column] if self.title_column in row.index else None
+            records.append({"date": date_value, "title": title_value, **analysis})
 
-        df = pd.DataFrame(records)
-        self.topic_dfs[topic] = df
+        df_result = pd.DataFrame(records)
+        self.topic_dfs[topic] = df_result
 
-        if not df.empty:
-            print(f"Average {topic} sentiment: {df['score'].mean()}")
+        if not df_result.empty:
+            print(f"Average {topic} sentiment ({self.source}): {df_result['score'].mean()}")
 
-        return df
+        return df_result
 
     def analyze_all_topics(self, topics: Optional[List[str]] = None) -> Dict[str, pd.DataFrame]:
         topics = topics or list(self.topics.keys())
         for topic in topics:
-            print(f"Analyzing {topic}...")
+            print(f"Analyzing {topic} ({self.source})...")
             self.analyze_topic(topic)
         return self.topic_dfs
 
-    # -- Summaries and plotting ----------------------------------------------
 
-    def summary_table(self) -> pd.DataFrame:
-        """Average government-stance score per analyzed topic, sorted ascending."""
-        rows = [
-            {"Topic": topic, "Average Government Stance": df["score"].mean()}
-            for topic, df in self.topic_dfs.items()
-        ]
-        return pd.DataFrame(rows).sort_values("Average Government Stance")
+# ---------------------------------------------------------------------------
+# Public functional API — mirrors graph_articles.py's
+# keyword_yearly_counts(df) / plot_category(...) calling convention
+# ---------------------------------------------------------------------------
 
-    def plot_summary(self, save_path: Optional[str] = None) -> None:
-        summary = self.summary_table()
+def run_topic_sentiment(
+    df: pd.DataFrame,
+    source: str = "news",
+    topics: Optional[Dict[str, List[str]]] = None,
+    analyzer: Optional[ArticleSentimentAnalyzer] = None,
+    sample_size: int = 20,
+    random_state: int = 42,
+    **kwargs,
+) -> Dict[str, pd.DataFrame]:
+    """
+    Run LLM topic-sentiment analysis over a dataframe of articles or speeches.
 
-        plt.figure(figsize=(8, 5))
-        plt.barh(summary["Topic"], summary["Average Government Stance"])
-        plt.axvline(x=0, linestyle="--")
-        plt.xlim(-2, 2)
-        plt.xlabel("Average Government Stance")
-        plt.title("Average Government Stance by Topic in Prime Minister Speeches")
-        plt.tight_layout()
-
-        if save_path:
-            plt.savefig(save_path)
-        plt.show()
-
-    def summarize_topic_with_llm(self, topic: str) -> str:
-        df = self.topic_dfs[topic]
-        text = "\n\n".join(df["raw"].dropna().tolist())
-
-        prompt = f"""Summarize the findings for {topic}.
-
-Include:
-- overall sentiment
-- dominant frames
-- recurring themes
-
-Keep to 4-5 sentences.
-
-{text[:12000]}
-"""
-        return self.analyzer.query_llm(prompt)
-
-    def summarize_all_topics_with_llm(self) -> Dict[str, str]:
-        summaries = {}
-        for topic in self.topic_dfs:
-            summary = self.summarize_topic_with_llm(topic)
-            summaries[topic] = summary
-            print("=" * 80)
-            print(topic)
-            print(summary)
-        return summaries
-
-
-if __name__ == "__main__":
-    pipeline = PMSpeechTopicAnalyzer(
-        csv_path="../data/clean/pm_speeches_en.csv",
+    Equivalent to keyword_yearly_counts(df) from graph_articles.py: pass in
+    a cleaned dataframe, get back a dict of topic -> results DataFrame.
+    """
+    pipeline = TopicSentimentAnalyzer(
+        df,
+        source=source,
+        topics=topics,
+        analyzer=analyzer,
+        sample_size=sample_size,
+        random_state=random_state,
+        **kwargs,
     )
-
-    print(pipeline.count_topic_mentions())
-
-    pipeline.analyze_all_topics()
-    pipeline.plot_summary()
-    pipeline.summarize_all_topics_with_llm()
-"""
-Compares per-topic sentiment between news coverage and PM speeches.
-
-Takes an already-analyzed JapanNewsTopicAnalyzer and PMSpeechTopicAnalyzer
-(i.e. analyze_all_topics() has been run on both) and builds a side-by-side
-comparison table and grouped bar chart, pulling live numbers from each
-pipeline's topic_dfs rather than hardcoded values.
-"""
-
-from __future__ import annotations
-
-from typing import Optional
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-
-from japan_news_topic_analyzer import JapanNewsTopicAnalyzer
-from pm_speech_topic_analyzer import PMSpeechTopicAnalyzer
+    return pipeline.analyze_all_topics()
 
 
-class NewsSpeechComparison:
-    """Builds a side-by-side comparison of news sentiment vs. PM speech stance per topic."""
+def plot_sentiment_comparison(
+    news_results: Dict[str, pd.DataFrame],
+    speech_results: Dict[str, pd.DataFrame],
+    labels: Tuple[str, str] = ("News", "Speeches"),
+    save_path: Optional[str] = None,
+) -> None:
+    """
+    Grouped bar chart comparing average sentiment/stance per topic between
+    two result sets (e.g. news vs. speeches), pulled live from the score
+    columns rather than hardcoded numbers.
+    """
+    topics = sorted(set(news_results) & set(speech_results))
+    if not topics:
+        raise ValueError("No shared topics found between news_results and speech_results.")
 
-    def __init__(
-        self,
-        news_pipeline: JapanNewsTopicAnalyzer,
-        speech_pipeline: PMSpeechTopicAnalyzer,
-    ):
-        self.news_pipeline = news_pipeline
-        self.speech_pipeline = speech_pipeline
+    news_scores = [news_results[topic]["score"].mean() for topic in topics]
+    speech_scores = [speech_results[topic]["score"].mean() for topic in topics]
 
-    def comparison_table(self) -> pd.DataFrame:
-        """
-        Average score per topic for both news and speeches.
+    x = np.arange(len(topics))
+    width = 0.35
 
-        Only topics analyzed in BOTH pipelines are included, so this stays
-        correct however many topics you've actually run analyze_all_topics() on.
-        """
-        topics = sorted(
-            set(self.news_pipeline.topic_dfs) & set(self.speech_pipeline.topic_dfs)
-        )
-        if not topics:
-            raise ValueError(
-                "No shared analyzed topics found between the two pipelines. "
-                "Run analyze_all_topics() on both before comparing."
-            )
+    plt.figure(figsize=(9, 6))
+    plt.bar(x - width / 2, news_scores, width, label=labels[0])
+    plt.bar(x + width / 2, speech_scores, width, label=labels[1])
+    plt.axhline(0, color="black", linestyle="--")
+    plt.xticks(x, topics, rotation=20)
+    plt.ylabel("Average LLM Sentiment Score")
+    plt.title(f"Average LLM Sentiment Score by Topic: {labels[0]} vs. {labels[1]}")
+    plt.legend()
+    plt.tight_layout()
 
-        rows = [
-            {
-                "Topic": topic,
-                "News": self.news_pipeline.topic_dfs[topic]["score"].mean(),
-                "Speeches": self.speech_pipeline.topic_dfs[topic]["score"].mean(),
-            }
-            for topic in topics
-        ]
-        return pd.DataFrame(rows)
-
-    def print_summary(self) -> None:
-        table = self.comparison_table()
-
-        print("News")
-        for _, row in table.iterrows():
-            print(f"{row['Topic']}: {row['News']}")
-
-        print("\nSpeeches")
-        for _, row in table.iterrows():
-            print(f"{row['Topic']}: {row['Speeches']}")
-
-    def plot_comparison(
-        self,
-        news_label: str = "Japan Times",
-        speech_label: str = "PM Speeches",
-        save_path: Optional[str] = None,
-    ) -> None:
-        comparison = self.comparison_table()
-
-        x = np.arange(len(comparison))
-        width = 0.35
-
-        plt.figure(figsize=(9, 6))
-        plt.bar(x - width / 2, comparison["News"], width, label=news_label)
-        plt.bar(x + width / 2, comparison["Speeches"], width, label=speech_label)
-        plt.axhline(0, color="black", linestyle="--")
-        plt.xticks(x, comparison["Topic"], rotation=20)
-        plt.ylabel("Average LLM Sentiment Score")
-        plt.title("Average LLM Sentiment Score by Topic: News vs. Prime Minister Speeches")
-        plt.legend()
-        plt.tight_layout()
-
-        if save_path:
-            plt.savefig(save_path)
-        plt.show()
-
-
-if __name__ == "__main__":
-    news_pipeline = JapanNewsTopicAnalyzer(
-        csv_path="../../project/data/raw/japan_english_news_kaggle.csv",
-    )
-    news_pipeline.analyze_all_topics()
-
-    speech_pipeline = PMSpeechTopicAnalyzer(
-        csv_path="../data/clean/pm_speeches_en.csv",
-    )
-    speech_pipeline.analyze_all_topics()
-
-    comparison = NewsSpeechComparison(news_pipeline, speech_pipeline)
-    comparison.print_summary()
-    comparison.plot_comparison()
+    if save_path:
+        plt.savefig(save_path)
+    plt.show()
