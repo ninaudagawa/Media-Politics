@@ -97,7 +97,7 @@ project/
 | Member | Tasks |
 |--------|-------|
 | Erin   | Cleaning datasets, News Article Keyword Analysis, Manifesto API Data Extraction |
-| Ailie   | Description of contributions |
+| Ailie   | Manifesto analysis attempts (failed), Keywords under categories for analysis, PM speech analysis: Against keywords,indiv. analysis |
 | Nina   | Description of contributions |
 | Martin   | Description of contributions |
 | Cyrus   | Description of contributions |
