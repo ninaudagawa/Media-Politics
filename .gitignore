@@ -5,6 +5,7 @@ japan_manifestos.csv
 __pycache__/
 *.py[codz]
 *$py.class
+mofa_pdfs/
 
 # C extensions
 *.so

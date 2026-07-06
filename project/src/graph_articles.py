@@ -11,7 +11,7 @@ def build_pattern(keywords):
 
 def keyword_yearly_counts(df, date_col='date'):
     df = df.copy()
-    df[date_col] = pd.to_datetime(df[date_col])
+    df[date_col] = pd.to_datetime(df[date_col], format='mixed', errors='coerce')
     
     yearly_totals = (
         df.resample('YE', on=date_col)
@@ -24,8 +24,7 @@ def keyword_yearly_counts(df, date_col='date'):
         pattern = build_pattern(keywords)
         yearly_counts = (
             df.assign(count=(
-                df['text'].str.contains(pattern, case=False, na=False) |
-                df['title'].str.contains(pattern, case=False, na=False)
+                df['text'].str.contains(pattern, case=False, na=False)
             ).astype(int))
             .resample('YE', on=date_col)['count']
             .sum()
@@ -71,4 +70,5 @@ def plot_category(category, *result_dfs, labels=None, title=None, min_docs=5):
     ax.set_ylabel('Proportion of documents')
     ax.legend()
     plt.tight_layout()
+    plt.savefig(f'{category}_newsvspeech_comparison.png')
     plt.show()
