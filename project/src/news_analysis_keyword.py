@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
+
 def category_article_count(keywords, df, text_col='text'):
     """
     Counts articles containing ANY keyword in the given list (category-level count).
@@ -38,6 +39,7 @@ def build_category_normalised_df(category_keywords, df, date_col='date', text_co
     """
     df = df.copy()
     df = df.set_index(date_col)
+    df.index = pd.to_datetime(df.index, format="mixed")
     df['year'] = df.index.year
 
     total_per_year = df.groupby('year').size()
