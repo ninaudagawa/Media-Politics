@@ -70,5 +70,5 @@ def plot_category(category, *result_dfs, labels=None, title=None, min_docs=5):
     ax.set_ylabel('Proportion of documents')
     ax.legend()
     plt.tight_layout()
-    # plt.savefig(f'{category}_newsvspeech_comparison.png')
+    plt.savefig(f'{category}_newsvspeech_comparison.png')
     plt.show()
