@@ -1,21 +1,22 @@
 CATEGORY_KEYWORDS = {
     "defense": {
-        "self defense", "self defence", "ASEAN", "US-Japan Alliance", 
-        "NATO", "Triton", "triton", "Maritime Security","maritime security", "DFNS", "Intelligence-Led Operations",
-        "Cybersecurity", "cybersecurity", "Alliance Deterrence" "alliance deterrence",
+        "Alliance", "Isolation", "Reunification", "Deterrence", 
+        "Self Defense", "Nuclear", "Maritime", "Piracy", "Cybersecurity", "Quantum Computing", "Artificial Intelligence",
+        "Space", "Spending", "Regional Security", "Belt and Road", "Treaty", "Diplomacy", "NATO", "ASEAN", "Strategic", "Defense"
     },
-    "economy": {"Abenomics", "stimulus", "monetization", "monetisation", "deflationary", "Abe doctrine", "sustainable growth", "structural reform", 
-                "export-led growth", "demographic shift", "stable growth", "Abenomics", "Stimulus", "Monetization", "Deflationary", 
-                "Abe doctrine", "Sustainable growth", "Structural reform", "Export-led growth", "Demographic shift", "Stable growth"
+    "economy": {"Export", "Investment", "Fiscal", "Monetary", "GDP", "Trade", "Innovation", 
+                "Demographic shift", "Labor market", "Supply chain", "Value-added tax", "Unemployment", "Consumer spending", "Industrial", 
+                "Regional development", "Infrastructure", "Social welfare", "Stimulus", "Abenomics", "Deflation", "Economics"
     },
     "nuclear": {
-        "Deterrence", "Non-proliferation", "Alliance", "Self-defense", "NPT", "SDGT", 
-        "Takeshima", "ASEAN", "US-Japan Security Treaty", "Peaceful use", "deterrence",
-        "non-proliferation", "alliance", "self-defense",  "peaceful use"
+        "Nuclear", "Reactor", "Fukushima", "Energy", "Nuclear Energy", "Proliferation", 
+        "IAEA", "Nuclear Safety", "Decommissioning", "Nuclear waste", "Recycling",
+        "Government regulation", "Transparency", "International cooperation",  "Nuclear Security", "Dismantling", "Fuel management", 
+        "Public opinion", "Regulatory bodies", "Deterrence"
     },
     "immigration": {
-        "Quota", "Skilled", "Guestworker", "Refugee", "Integration", 
-        "Citizenship", "Asylum", "Pathway", "Talent", "Inclusion", "quota", "skilled", "guestworker", "refugee", "integration", 
-        "citizenship", "asylum", "pathway", "talent", "inclusion"
+        "Quota", "Visa", "Residency", "Immigration", "Lobbying", 
+        "Deportation", "Asylum", "Refugee", "Guest worker", "Skilled migrant", "Language test", "Integration", "Immigration reform", "Global governance", "UNHCR", 
+        "Citizenship", "Human rights", "Naturalization", "Border control", "Passport", "Residence Card"
     },
 }
