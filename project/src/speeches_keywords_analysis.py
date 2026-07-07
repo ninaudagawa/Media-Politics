@@ -189,6 +189,8 @@ def build_top_political_phrases_df(speeches_df, category_keywords=CATEGORY_KEYWO
         .head(top_n)
         .reset_index(drop=True)
     )
+    
+    
 
 
 # --- Plotting for top phrases --------------------------------------------
