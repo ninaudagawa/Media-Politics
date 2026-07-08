@@ -96,8 +96,8 @@ project/
 |--------|-------|
 | Erin   | Cleaning datasets, News Article Keyword Analysis, Manifesto API Data Extraction |
 | Ailie   | Manifesto analysis attempts (failed), Keywords under categories for analysis, PM speech analysis: Against keywords,indiv. analysis |
-| Nina   | Finding datasets, sentiment analysis, guide markdowns, video |
-| Martin   | Description of contributions |
+| Nina   | Finding datasets, timeline, sentiment analysis, guide markdowns, video |
+| Martin   | Literature review, timeline, NYT news analysis and regression, video |
 | Cyrus   | Description of contributions |
 | Mariiam   | Description of contributions |
 
