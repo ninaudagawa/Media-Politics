@@ -9,9 +9,6 @@
 - Cyrus (@cyrusncw05)
 - Nina (@ninaudagawa)
 
-### 📃 Team Google Doc
-This is a link to our shared team [google doc](https://docs.google.com/document/d/1Du4dsbBI-boIYcwgLPmUy349A3xhu8lIs0hSR87-xnA/edit?usp=sharing) where we are currently drafting our ideas and saving potential resources.
-
 
 ## ❓ Research Question & 🎯 Hypothesis
 
@@ -98,7 +95,7 @@ project/
 |--------|-------|
 | Erin   | Cleaning datasets, News Article Keyword Analysis, Manifesto API Data Extraction |
 | Ailie   | Manifesto analysis attempts (failed), Keywords under categories for analysis, PM speech analysis: Against keywords,indiv. analysis |
-| Nina   | Description of contributions |
+| Nina   | Finding datasets, sentiment analysis, guide markdowns, video |
 | Martin   | Description of contributions |
 | Cyrus   | Description of contributions |
 | Mariiam   | Description of contributions |
