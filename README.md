@@ -9,6 +9,7 @@
 - Cyrus (@cyrusncw05)
 - Nina (@ninaudagawa)
 
+Note: For our main document, please refer to our media_politics_guide notebook which summarizes all of our steps and project introduction, methodology, results, and conclusion. (https://github.com/ninaudagawa/Media-Politics/blob/main/project/notebooks/media_politics_guide.ipynb)
 
 ## ❓ Research Question & 🎯 Hypothesis
 
