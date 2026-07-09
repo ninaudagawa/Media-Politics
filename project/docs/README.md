@@ -9,7 +9,11 @@
 - Cyrus (@cyrusncw05)
 - Nina (@ninaudagawa)
 
-Note: For our main document, please refer to our media_politics_guide notebook which summarizes all of our steps and project introduction, methodology, results, and conclusion. (https://github.com/ninaudagawa/Media-Politics/blob/main/project/notebooks/media_politics_guide.ipynb)
+## 🖥️ Presentation
+
+For our main documentation, please refer to our [media_politics_guide notebook](../docs/media_politics_guide.ipynb) which summarizes all of our steps and project introduction, methodology, results, and conclusion.
+
+Group Presentation: [Youtube video](https://youtu.be/OVP2B3I7Hec)
 
 ## ❓ Research Question & 🎯 Hypothesis
 
@@ -31,10 +35,11 @@ Rationale: Political speeches often employ diplomatic, strategic, or deliberatel
 
 | Source | Description | URL |
 |--------|-------------|-----|
-| Kaggle| News articles from Japanese newspapers, collected from newspapers websites and the Old Newspapers dataset. In Japanese and English. | (https://www.kaggle.com/datasets/vyhuholl/japanese-newspapers-20052021) |
-| "The World and Japan" Database by Institute for Advanced Studies on Asia (IASA), The University of Tokyo| Database of Japanese Politics and International Relations Speeches of Prime Ministers| (https://worldjpn.net/documents/indices/exdpm/index-ENG.html)) |
-| New York Times Index by Comparative Agnedas Project| This dataset is a systematic random sample of the New York Times Index. The sample includes the first entry on every odd-numbered page of the Index. Each entry is coded by CAP and U.S. Policy Agendas major topics and includes other variables such as the length, date and location of the story and whether it addressed government actions.| (https://www.comparativeagendas.net/datasets_codebooks) |
-| State of the Union Speeches by Comparative Agnedas Project| This dataset contains information on each quasi-statement in the Presidential State of the Union Speeches. Each quasi-statement is coded according to our system of policy content categories and other variables. | ([https://worldjpn.net/documents/indices/exdpm/index-ENG.html)](https://www.comparativeagendas.net/datasets_codebooks)) |
+| Kaggle| News articles from Japanese newspapers, collected from newspapers websites and the Old Newspapers dataset. In Japanese and English. | [https://www.kaggle.com](https://www.kaggle.com/datasets/vyhuholl/japanese-newspapers-20052021) |
+| "The World and Japan" Database by Institute for Advanced Studies on Asia (IASA), The University of Tokyo| Database of Japanese Politics and International Relations Speeches of Prime Ministers| [https://worldjpn.net](https://worldjpn.net/documents/indices/exdpm/index-ENG.html) |
+| New York Times Index by Comparative Agnedas Project| This dataset is a systematic random sample of the New York Times Index. The sample includes the first entry on every odd-numbered page of the Index. Each entry is coded by CAP and U.S. Policy Agendas major topics and includes other variables such as the length, date and location of the story and whether it addressed government actions.| [https://www.comparativeagendas.net](https://www.comparativeagendas.net/datasets_codebooks) |
+| State of the Union Speeches by Comparative Agnedas Project| This dataset contains information on each quasi-statement in the Presidential State of the Union Speeches. Each quasi-statement is coded according to our system of policy content categories and other variables. | [https://www.comparativeagendas.net](https://www.comparativeagendas.net/project/us/datasets) |
+| Speeches by the Foreign Ministers of Japan, Ministry of Foreign Affairs | Database of speeches made by the foreign ministers of Japan translated into English in pdf and metadata text form. | [https://warp.ndl.go.jp/web](https://warp.ndl.go.jp/web/20211001134951/http://www.mofa.go.jp/announce/fm/index.html) |
 
 
 ## 📂 Folder Structure
@@ -94,7 +99,7 @@ project/
 
 | Member | Tasks |
 |--------|-------|
-| Erin   | Cleaning datasets, News Article Keyword Analysis, Manifesto API Data Extraction |
+| Erin   | Cleaning datasets, Manifesto API data extraction, PM speech web scraping, Foreign minister speech web scraping, Ollama generated keywords, Graphs, Guide|
 | Ailie   | Manifesto analysis attempts (failed), Keywords under categories for analysis, PM speech analysis: Against keywords,indiv. analysis |
 | Nina   | Finding datasets, timeline, sentiment analysis, guide markdowns, video |
 | Martin   | Literature review, timeline, NYT news analysis and regression, video |
