@@ -11,7 +11,7 @@
 
 ## 🖥️ Presentation
 
-For our main documentation, please refer to our [media_politics_guide notebook](../docs/media_politics_guide.ipynb) which summarizes all of our steps and project introduction, methodology, results, and conclusion.
+For our main documentation, please refer to our [media_politics_guide notebook](/project/docs/media_politics_guide.ipynb) which summarizes all of our steps and project introduction, methodology, results, and conclusion.
 
 Group Presentation: [Youtube video](https://youtu.be/OVP2B3I7Hec)
 
