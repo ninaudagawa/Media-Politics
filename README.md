@@ -103,7 +103,7 @@ project/
 | Ailie   | Manifesto analysis attempts (failed), Keywords under categories for analysis, PM speech analysis: Against keywords,indiv. analysis |
 | Nina   | Finding datasets, timeline, sentiment analysis, guide markdowns, video |
 | Martin   | Literature review, timeline, NYT news analysis and regression, video |
-| Cyrus   | Description of contributions |
+| Cyrus   | Basic statistic of news analysis (most frequent keywords, word cloud), Keyword trends + graphs for news analysis, Keywords under categories for analysis, Normalisation of data (both news and speeches), regression analysis |
 | Mariiam   | Description of contributions |
 
 ## 🔗 References
