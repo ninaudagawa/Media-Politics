@@ -100,7 +100,7 @@ project/
 | Member | Tasks |
 |--------|-------|
 | Erin   | Cleaning datasets, Manifesto API data extraction, PM speech web scraping, Foreign minister speech web scraping, Ollama generated keywords, Graphs, Guide|
-| Ailie   | Manifesto analysis attempts (failed), Keywords under categories for analysis, PM speech analysis: Against keywords,indiv. analysis |
+| Ailie   | Manifesto analysis attempts (failed), Keywords under categories for analysis, PM speech analysis: Against keywords,indiv. analysis, composition of python files for speech analysis |
 | Nina   | Finding datasets, timeline, sentiment analysis, guide markdowns, video |
 | Martin   | Literature review, timeline, NYT news analysis and regression, video |
 | Cyrus   | Basic statistic of news analysis (most frequent keywords, word cloud), Keyword trends + graphs for news analysis, Keywords under categories for analysis, Normalisation of data (both news and speeches), regression analysis |
